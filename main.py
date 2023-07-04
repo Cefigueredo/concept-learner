@@ -4,7 +4,7 @@ import fastapi
 from fastapi import status
 from fastapi.middleware import cors
 
-import api.api_v1.api_routers as api_routers
+from api.api_v1 import api_routers
 from core import config
 
 logger = logging.getLogger()
