@@ -4,7 +4,7 @@ import fastapi
 from fastapi import status
 from fastapi.middleware import cors
 
-from api.api_v1 import api
+import api.api_v1.api_routers as api_routers
 from core import config
 
 logger = logging.getLogger()
@@ -46,6 +46,6 @@ app_v1 = fastapi.FastAPI(
     contact=config.settings.PROJECT_CONTACT,
 )
 
-app_v1.include_router(api.api_router)
+app_v1.include_router(api_routers.api_router)
 
 app.mount("/v1", app_v1)
