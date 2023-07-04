@@ -4,7 +4,7 @@ import fastapi
 from fastapi import status
 from fastapi.middleware import cors
 
-from api.api_v1 import api
+import api.api_v1.api as api
 from core import config
 
 logger = logging.getLogger()
