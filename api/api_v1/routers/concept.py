@@ -63,12 +63,8 @@ async def add_concept(
     db: asyncio.AsyncSession = fastapi.Depends(dependencies.get_async_db),
     concept: schemas.Concept = fastapi.Body(
         example={
-            "id": "4d9c6b62-de34-11ed-b5ea-0242ac120002",
-            "posting_id": "4d9c6b62-de34-11ed-b5ea-0242ac120003",
-            "user_id": "",
-            "created_at": 123123123,
-            "type": "referral",
-            "company": "Factored",
+            "concept": "Pamper /ˈpæmpər/",
+            "meaning": "Mimar o consentir a alguien",
         }
     ),
 ) -> Any:
@@ -98,16 +94,16 @@ async def update_concept(
                 "summary": "An example with all fields",
                 "description": "Description",
                 "value": {
-                    "concept": "Pizza",
-                    "difficutly": "Pizza",
+                    "concept": "Pamper /ˈpæmpər/",
+                    "meaning": "Mimar o consentir a alguien",
                 },
             },
             "Partial_fields": {
                 "summary": "An example with partial fields",
                 "description": "Description",
                 "value": {
-                    "concept": "Pizza",
-                    "difficutly": "Pizza",
+                    "concept": "Pamper /ˈpæmpər/",
+                    "meaning": "Mimar o consentir a alguien",
                 },
             },
         }
