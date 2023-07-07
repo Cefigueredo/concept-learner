@@ -1,7 +1,7 @@
 from typing import Any
 
 import fastapi
-from fastapi import responses, status
+from fastapi import status
 from sqlalchemy.ext import asyncio
 
 import schemas.concept as schemas
@@ -61,7 +61,7 @@ async def get_concept(
 async def add_concept(
     *,
     db: asyncio.AsyncSession = fastapi.Depends(dependencies.get_async_db),
-    concept: schemas.Concept = fastapi.Body(
+    concept: schemas.ConceptCreate = fastapi.Body(
         example={
             "concept": "Pamper /ˈpæmpər/",
             "meaning": "Mimar o consentir a alguien",
@@ -69,6 +69,7 @@ async def add_concept(
     ),
 ) -> Any:
     """Create a new Concept"""
+    print("Concept ----------------------------   ", concept)
     db_concept = await crud_concept.create(db, concept)
 
     schema = schemas.ConceptInDB.from_orm(db_concept)
@@ -76,60 +77,60 @@ async def add_concept(
     return schema
 
 
-@router.put(
-    "/{concept_id}",
-    response_model=schemas.Concept,
-    status_code=status.HTTP_200_OK,
-)
-async def update_concept(
-    *,
-    db: asyncio.AsyncSession = fastapi.Depends(dependencies.get_async_db),
-    concept_id: str = fastapi.Path(
-        max_length=63,
-        description="Concept ID",
-    ),
-    concept: schemas.ConceptUpdate = fastapi.Body(
-        examples={
-            "All_fields": {
-                "summary": "An example with all fields",
-                "description": "Description",
-                "value": {
-                    "concept": "Pamper /ˈpæmpər/",
-                    "meaning": "Mimar o consentir a alguien",
-                },
-            },
-            "Partial_fields": {
-                "summary": "An example with partial fields",
-                "description": "Description",
-                "value": {
-                    "concept": "Pamper /ˈpæmpər/",
-                    "meaning": "Mimar o consentir a alguien",
-                },
-            },
-        }
-    ),
-) -> Any:
-    """Update an concept"""
-    db_concept_updated = await crud_concept.update(db, concept, id=concept_id)
+# @router.put(
+#     "/{concept_id}",
+#     response_model=schemas.Concept,
+#     status_code=status.HTTP_200_OK,
+# )
+# async def update_concept(
+#     *,
+#     db: asyncio.AsyncSession = fastapi.Depends(dependencies.get_async_db),
+#     concept_id: str = fastapi.Path(
+#         max_length=63,
+#         description="Concept ID",
+#     ),
+#     concept: schemas.ConceptUpdate = fastapi.Body(
+#         examples={
+#             "All_fields": {
+#                 "summary": "An example with all fields",
+#                 "description": "Description",
+#                 "value": {
+#                     "concept": "Pamper /ˈpæmpər/",
+#                     "meaning": "Mimar o consentir a alguien",
+#                 },
+#             },
+#             "Partial_fields": {
+#                 "summary": "An example with partial fields",
+#                 "description": "Description",
+#                 "value": {
+#                     "concept": "Pamper /ˈpæmpər/",
+#                     "meaning": "Mimar o consentir a alguien",
+#                 },
+#             },
+#         }
+#     ),
+# ) -> Any:
+#     """Update an concept"""
+#     db_concept_updated = await crud_concept.update(db, concept, id=concept_id)
 
-    schema = schemas.ConceptInDB.from_orm(db_concept_updated)
-    return schema
+#     schema = schemas.ConceptInDB.from_orm(db_concept_updated)
+#     return schema
 
 
-@router.delete("/{concept_id}", status_code=status.HTTP_200_OK)
-async def delete_concept(
-    concept_id: str = fastapi.Path(
-        max_length=63,
-        description="Concept ID",
-    ),
-    db: asyncio.AsyncSession = fastapi.Depends(dependencies.get_async_db),
-) -> responses.JSONResponse:
-    """Delete an concept"""
-    await crud_concept.delete(db, id=concept_id)
+# @router.delete("/{concept_id}", status_code=status.HTTP_200_OK)
+# async def delete_concept(
+#     concept_id: str = fastapi.Path(
+#         max_length=63,
+#         description="Concept ID",
+#     ),
+#     db: asyncio.AsyncSession = fastapi.Depends(dependencies.get_async_db),
+# ) -> responses.JSONResponse:
+#     """Delete an concept"""
+#     await crud_concept.delete(db, id=concept_id)
 
-    return responses.JSONResponse(
-        status_code=status.HTTP_200_OK,
-        content={
-            "message": ("Deletion of Employee was executed successfully.")
-        },
-    )
+#     return responses.JSONResponse(
+#         status_code=status.HTTP_200_OK,
+#         content={
+#             "message": ("Deletion of Employee was executed successfully.")
+#         },
+#     )

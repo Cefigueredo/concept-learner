@@ -14,9 +14,6 @@ class ConceptCreate(ConceptBase):
     concept: str
     meaning: str
 
-    class Config:
-        extra = "forbid"
-
 
 class ConceptUpdate(base_schema.BaseSchema):
     concept: str | None
